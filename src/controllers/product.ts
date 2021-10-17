@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction /*RequestHandler*/ } from 'express'
 
 import Product from '../models/Product'
 import ProductService from '../services/product'
@@ -38,5 +38,57 @@ export const updateProduct = async (
   next: NextFunction
 ) => {
   try {
-  } catch (error) {}
+    const update = req.body
+    const productId = req.params.productId
+    const updateProduct = await ProductService.update(productId, update)
+    res.json(updateProduct)
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// DELETE /products/:productId
+export const deleteProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await ProductService.deleteProduct(req.params.productId)
+    res.status(204).end()
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+/*
+      export const getProducts: RequestHandler = async (req, res, next) => {
+      res.json(await ProductService.findAll())
+    }
+
+*/
+
+// GET /products/:product
+export const findAll = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(await ProductService.findAll())
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
 }

@@ -36,6 +36,7 @@ export const createMovie = async (
 export const updateMovie = async (
   req: Request,
   res: Response,
+
   next: NextFunction
 ) => {
   try {

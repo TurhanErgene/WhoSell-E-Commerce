@@ -14,20 +14,26 @@ export interface CustomerDocument extends Document {
   orders: number[] //this might contain Id's
 }
 
-const CustomerSchema = new Schema<CustomerDocument>({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  country: { type: String, required: true },
-  phone: { type: String, required: true },
-  email: { type: String, required: true },
-  street: { type: String, required: true },
-  zip: { type: String, required: true },
+const CustomerSchema = new Schema<CustomerDocument>(
+  {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    country: { type: String, required: true },
+    phone: { type: String, required: true },
+    email: { type: String, required: true },
+    street: { type: String, required: true },
+    zip: { type: String, required: true },
 
-  orders: [
-    {
-      //type:
-    },
-  ],
-})
+    orders: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Order',
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+)
 
 export default model('Customer', CustomerSchema)
