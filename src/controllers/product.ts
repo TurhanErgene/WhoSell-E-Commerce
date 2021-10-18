@@ -11,7 +11,7 @@ export const createProduct = async (
   next: NextFunction
 ) => {
   try {
-    const { name, loadDate, category, quantity, price } = req.body
+    const { name, loadDate, category, quantity, price, rating } = req.body
 
     const product = new Product({
       name,
@@ -19,6 +19,7 @@ export const createProduct = async (
       category,
       quantity,
       price,
+      rating,
     })
     await ProductService.create(product)
   } catch (error) {
@@ -69,13 +70,28 @@ export const deleteProduct = async (
   }
 }
 
+export const findById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(await ProductService.findById(req.params.productId))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(error)
+    }
+  }
+}
+
 /*
       export const getProducts: RequestHandler = async (req, res, next) => {
       res.json(await ProductService.findAll())
     }
 
 */
-
 // GET /products/:product
 export const findAll = async (
   req: Request,

@@ -5,6 +5,7 @@ export type ProductDocument = Document & {
   loadDate: number
   category: string[]
   quantity: number
+  rating: number
   price: number
 }
 
@@ -24,7 +25,14 @@ const productSchema = new mongoose.Schema({
     required: true,
     min: 1,
   },
-  price: { type: Number, required: true },
+  rating: {
+    type: Number,
+    min: 0,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
 })
 
 export default mongoose.model<ProductDocument>('Product', productSchema)
