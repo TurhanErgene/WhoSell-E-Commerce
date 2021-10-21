@@ -1,8 +1,7 @@
 import { Schema, model, Document } from 'mongoose'
 
 export interface CustomerDocument extends Document {
-  //CustomerDocument
-  id: string //Ask if this needed!
+  id: string
   firstName: string
   lastName: string
   country: string
@@ -11,18 +10,19 @@ export interface CustomerDocument extends Document {
   street: string
   zip: string
 
-  orders: number[] //this might contain Id's
+  orders: string[] //this will contain Id's
 }
 
 const CustomerSchema = new Schema<CustomerDocument>(
   {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    country: { type: String, required: true },
-    phone: { type: String, required: true },
-    email: { type: String, required: true },
-    street: { type: String, required: true },
-    zip: { type: String, required: true },
+    id: { type: String, required: true },
+    firstName: { type: String, required: [true, 'Name field is required'] },
+    lastName: { type: String, required: [true, 'Last name is required'] },
+    country: { type: String, required: [true, 'Country field is required'] },
+    phone: { type: String, required: [true, 'Phone field is required'] },
+    email: { type: String, required: [true, 'Email field is required'] },
+    street: { type: String, required: [true, 'Street field is required'] },
+    zip: { type: String, required: [true, 'Zip field is required'] },
 
     orders: [
       {
