@@ -1,5 +1,7 @@
 import mongoose, { Document } from 'mongoose'
 
+//export type Categories = 'All'|'Electronics'|'Computers'|'Books'|'Toys'|'Books'
+
 export type ProductDocument = Document & {
   name: string
   loadDate: number

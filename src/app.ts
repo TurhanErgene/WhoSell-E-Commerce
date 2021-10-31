@@ -7,6 +7,9 @@ import cors from 'cors'
 
 import loginRouter from './routers/login'
 import movieRouter from './routers/movie'
+import customerRouter from './routers/customer'
+import adminRouter from './routers/admin'
+import orderRouter from './routers/order'
 import productRouter from './routers/product'
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
@@ -33,8 +36,12 @@ passport.use(googleStrategy)
 // Use movie router
 app.use('/api/v1/movies', movieRouter)
 app.use('/api/v1/google/login', loginRouter)
-
+app.use('/api/v1/customers', customerRouter)
 app.use('/api/v1/products', productRouter)
+app.use('/api/v1/order', orderRouter)
+app.use('/api/v1/admin', adminRouter)
+
+
 
 // Custom API error handler
 app.use(apiErrorHandler)

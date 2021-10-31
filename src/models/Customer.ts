@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose'
+import moongose, { Schema, model, Document } from 'mongoose'
 
 export interface CustomerDocument extends Document {
   id: string
@@ -8,9 +8,12 @@ export interface CustomerDocument extends Document {
   phone: string
   email: string
   street: string
-  zip: string
-
+  zip: string 
+  isAdmin: boolean
   orders: string[] //this will contain Id's
+  cart: {
+    product: moongose.Types.ObjectId; 
+    quantity: number}
 }
 
 const CustomerSchema = new Schema<CustomerDocument>(
@@ -23,6 +26,9 @@ const CustomerSchema = new Schema<CustomerDocument>(
     email: { type: String, required: [true, 'Email field is required'] },
     street: { type: String, required: [true, 'Street field is required'] },
     zip: { type: String, required: [true, 'Zip field is required'] },
+    isAdmin: { 
+      type: Boolean,
+      default: false },
 
     orders: [
       {

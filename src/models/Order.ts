@@ -1,11 +1,13 @@
 import mongoose, { Document, Schema } from 'mongoose'
-import { type } from 'os'
+import { ProductDocument } from './product'
+import { CustomerDocument } from './customer'
+
 
 export type OrderDocument = Document & {
   orderId: string
-  shipmentDate: Date
-  productCart: string[]
-  customerId: string
+  orderDate: Date
+  productCart: ProductDocument[]
+  customerId: CustomerDocument
 }
 
 const orderSchema = new mongoose.Schema({
@@ -13,13 +15,19 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  shipmentDate: {
+  orderDate: {
     type: Date,
     required: true,
+  },
+  customerId: {
+      type: String,
+      required: true,
+      ref: 'Customer',
   },
   productCart: [
     {
       type: Schema.Types.ObjectId,
+      ref: 'Product'
     },
   ],
 })
