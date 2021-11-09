@@ -3,7 +3,6 @@ import { Request, Response, NextFunction, RequestHandler } from 'express'
 import OrderService from '../services/order'
 import Order from '../models/order'
 import { BadRequestError } from '../helpers/apiError'
-import order from '../services/order'
 
 export const createOrder = async(
   req: Request,
@@ -11,7 +10,18 @@ export const createOrder = async(
   next: NextFunction,
 ) => {
   try {
-    res.json(await Order.create(new Order(req.body)))
+    const { orderId, orderDate, productCart, customerId } = req.body
+
+    const order = new Order({
+      orderId, 
+      orderDate, 
+      productCart, 
+      customerId,
+    })
+
+    await OrderService.create(order)
+    res.json(order)
+    // res.json(await Order.create(new Order(req.body)))
   } catch (error) {
 
     if (error instanceof Error && error.name == 'ValidationError'){
@@ -45,6 +55,12 @@ export const updateOrder: RequestHandler = async (
   ) => {
 
     try {
+
+      /*const update = req.body
+      const orderId = req.params.orderId
+      const updatedOrder = await OrderService.update(orderId, update)
+      res.json(updatedOrder)*/
+      
       const updateOrder = await OrderService.update(
       req.params.orderId,
       req.body

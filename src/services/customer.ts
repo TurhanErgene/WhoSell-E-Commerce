@@ -1,23 +1,32 @@
 import Customer, { CustomerDocument } from '../models/Customer'
 import { NotFoundError } from '../helpers/apiError'
+import axios from 'axios'
 
-const findOrCreate = async (customerEmail: string) => {
+
+
+const findOrCreate = async (
+  customerEmail: string,
+  picture: string,
+  givenName: string,
+) => {
   const customer = await Customer.findOne({ email: customerEmail })
   if (!customer) {
-    const newCustomer = new Customer({ email: customerEmail })
-    const created = await newCustomer.save()
-    return created
-
-    /*const create = async (
-      customer: CustomerDocument
-    ): Promise<CustomerDocument> => {
-      return customer.save()
-    }*/
+    const findCustomer = async () => {
+      const createdCustomer: any = await axios.post(
+        'http://localhost:3000/api/v1/customers',
+        {
+          firstName: givenName,
+          image: picture,
+          email: customerEmail,
+        }
+      )
+      return createdCustomer
+    }
+    findCustomer()
   } else {
     return customer
   }
 }
-
 const findById = async (customerId: string): Promise<CustomerDocument> => {
   const foundCustomer = await Customer.findById(customerId)
 
