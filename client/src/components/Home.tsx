@@ -1,5 +1,5 @@
 
-import Navbar from './Navbar/index';
+import Navbar from './Navbar';
 import Product from './Product';
 import { useLocation } from 'react-router'
 import './pages.css';

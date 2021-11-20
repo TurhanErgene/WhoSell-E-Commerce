@@ -1,4 +1,6 @@
-import { OrderDocument, ProductDocument  } from '../../types'
+import { OrderDocument, ProductDocument, CustomerDocument } from '../../types'
+import { Dispatch } from 'redux'
+import axios from 'axios'
 
 
 export const toggleCart = () => (dispatch:any) => {
@@ -35,6 +37,11 @@ export const addCustomerData =
       console.log(error.message)
     }
   }
+
+
+  
+
+
 
 export const addProductToCart = (product:ProductDocument) =>  (dispatch:any) => {
   try {

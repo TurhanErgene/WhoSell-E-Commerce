@@ -1,5 +1,5 @@
 import Footer from "../components/Footer"
-import Navbar from "../components/Navbar/index"
+import Navbar from "../components/Navbar"
 
 
 

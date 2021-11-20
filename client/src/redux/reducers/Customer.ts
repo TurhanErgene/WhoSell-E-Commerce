@@ -11,10 +11,10 @@ interface DefaultState {
 const customerReducer = (state: DefaultState = defaultState, action: any) => {
   switch (action.type) {
     case 'FETCH_ALL_CUSTOMERS':
-    return {
-      ...state,
-    customer: action.customer,
-    }
+      return {
+        ...state,
+        customer: action.customer,
+      }
   
     case 'CREATE_CUSTOMER':
       const newCustomer = action.payload

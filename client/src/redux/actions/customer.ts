@@ -6,6 +6,7 @@ export const getJWTToken = (token: string) => {
   return{
     type: 'GET_JWT_TOKEN',
     payload: token,
+    
   }
 }
 
